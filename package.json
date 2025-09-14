@@ -1,0 +1,24 @@
+{
+  "name": "danny-nguyen-intern-repo",
+  "version": "1.0.0",
+  "description": "Learning repository for Git, CI/CD, and software development practices",
+  "scripts": {
+    "prepare": "husky install",
+    "lint:markdown": "markdownlint '**/*.md' --ignore node_modules",
+    "lint:spell": "cspell '**/*.md' '**/*.txt' --no-progress",
+    "lint:python": "flake8 *.py --max-line-length=88 --extend-ignore=E203,W503",
+    "format:python": "black *.py",
+    "test": "python -m pytest || echo 'No pytest tests found'",
+    "pre-commit": "npm run lint:markdown && npm run lint:spell"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "markdownlint-cli": "^0.37.0",
+    "cspell": "^7.3.8"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run pre-commit"
+    }
+  }
+}

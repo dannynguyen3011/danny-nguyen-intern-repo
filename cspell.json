@@ -1,0 +1,28 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "github",
+    "repo",
+    "workflow",
+    "markdownlint",
+    "cspell",
+    "danny",
+    "nguyen",
+    "cicd",
+    "workflows",
+    "linting",
+    "flake8",
+    "pytest",
+    "yaml",
+    "json",
+    "ubuntu",
+    "nodejs"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    ".git/**",
+    "*.log",
+    ".github/workflows/*.yml"
+  ]
+}
