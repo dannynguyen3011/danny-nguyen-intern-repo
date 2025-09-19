@@ -1,0 +1,46 @@
+{
+  "welcome": "Bienvenido a la Demo de React Hooks",
+  "language": "Idioma",
+  "changeLanguage": "Cambiar Idioma",
+  "currentLanguage": "Idioma Actual: {{language}}",
+  "performance": {
+    "title": "Demo de Optimización de Rendimiento",
+    "description": "Este componente demuestra técnicas de optimización de hooks de React",
+    "useMemo": {
+      "title": "Demo de useMemo",
+      "description": "Cálculos costosos almacenados en caché con useMemo",
+      "listSize": "Tamaño de lista: {{count}} números",
+      "calculation": "Suma de cuadrados: {{result}}",
+      "computationTime": "Tiempo de cálculo: {{time}}ms",
+      "recomputations": "Total de recálculos: {{count}}"
+    },
+    "useCallback": {
+      "title": "Demo de useCallback",
+      "description": "Previniendo re-renderizados innecesarios con useCallback",
+      "counter": "Contador: {{count}}",
+      "increment": "Incrementar",
+      "childRenders": "Renderizados del componente hijo: {{count}}"
+    }
+  },
+  "i18n": {
+    "title": "Demo de Internacionalización",
+    "description": "Soporte multi-idioma con i18next",
+    "features": {
+      "languageDetection": "Detección automática de idioma",
+      "fallback": "Soporte de idioma de respaldo",
+      "interpolation": "Interpolación de variables",
+      "pluralization": "Soporte de pluralización"
+    }
+  },
+  "buttons": {
+    "reset": "Reiniciar",
+    "toggle": "Alternar",
+    "calculate": "Calcular"
+  },
+  "messages": {
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "success": "Operación completada exitosamente",
+    "noData": "No hay datos disponibles"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "welcome": "Welcome to React Hooks Demo",
+  "language": "Language",
+  "changeLanguage": "Change Language",
+  "currentLanguage": "Current Language: {{language}}",
+  "performance": {
+    "title": "Performance Optimization Demo",
+    "description": "This component demonstrates React hooks optimization techniques",
+    "useMemo": {
+      "title": "useMemo Demo",
+      "description": "Expensive calculations cached with useMemo",
+      "listSize": "List Size: {{count}} numbers",
+      "calculation": "Sum of squares: {{result}}",
+      "computationTime": "Computation time: {{time}}ms",
+      "recomputations": "Total recomputations: {{count}}"
+    },
+    "useCallback": {
+      "title": "useCallback Demo",
+      "description": "Preventing unnecessary re-renders with useCallback",
+      "counter": "Counter: {{count}}",
+      "increment": "Increment",
+      "childRenders": "Child component renders: {{count}}"
+    }
+  },
+  "i18n": {
+    "title": "Internationalization Demo",
+    "description": "Multi-language support with i18next",
+    "features": {
+      "languageDetection": "Automatic language detection",
+      "fallback": "Fallback language support",
+      "interpolation": "Variable interpolation",
+      "pluralization": "Pluralization support"
+    }
+  },
+  "buttons": {
+    "reset": "Reset",
+    "toggle": "Toggle",
+    "calculate": "Calculate"
+  },
+  "messages": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Operation completed successfully",
+    "noData": "No data available"
+  }
+}
