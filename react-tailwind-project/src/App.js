@@ -11,6 +11,7 @@ import CounterPage from './pages/CounterPage';
 import HelloWorldPage from './pages/HelloWorldPage';
 import ReduxPage from './pages/ReduxPage';
 import TestingPage from './pages/TestingPage';
+import ApiTestingPage from './pages/ApiTestingPage';
 
 // Loading component
 const LoadingSpinner = () => (
@@ -92,6 +93,7 @@ function App() {
           <Route path="/hello" element={<HelloWorldPage />} />
             <Route path="/redux" element={<ReduxPage />} />
             <Route path="/testing" element={<TestingPage />} />
+            <Route path="/api-testing" element={<ApiTestingPage />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

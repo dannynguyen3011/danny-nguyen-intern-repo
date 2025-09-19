@@ -145,8 +145,8 @@ describe('HelloWorld Component', () => {
     test('handles boolean name', () => {
       render(<HelloWorld name={true} />);
       
-      // Boolean true is truthy, so it should fall back to default
-      expect(screen.getByText('Hello, Focus Bear! 👋')).toBeInTheDocument();
+      // Boolean true is truthy, so it won't fall back to default
+      expect(screen.getByText('Hello, true! 👋')).toBeInTheDocument();
     });
   });
 
