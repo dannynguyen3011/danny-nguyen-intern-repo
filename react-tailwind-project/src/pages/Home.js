@@ -50,6 +50,12 @@ const Home = () => {
             >
               📝 Contact Form
             </Link>
+            <Link
+              to="/counter"
+              className="px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+            >
+              🔢 Counter Demo
+            </Link>
             <button
               onClick={handleNavigateToProfile}
               className="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"
