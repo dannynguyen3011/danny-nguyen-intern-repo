@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import FormPage from './pages/FormPage';
 import CounterPage from './pages/CounterPage';
+import HelloWorldPage from './pages/HelloWorldPage';
 
 // Loading component
 const LoadingSpinner = () => (
@@ -59,6 +60,12 @@ const NotFound = () => {
           >
             🔢 Counter Demo
           </a>
+          <a
+            href="/hello"
+            className="block w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200"
+          >
+            👋 HelloWorld Component
+          </a>
         </div>
       </div>
     </div>
@@ -74,6 +81,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/form" element={<FormPage />} />
           <Route path="/counter" element={<CounterPage />} />
+          <Route path="/hello" element={<HelloWorldPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

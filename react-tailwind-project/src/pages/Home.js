@@ -56,6 +56,12 @@ const Home = () => {
             >
               🔢 Counter Demo
             </Link>
+            <Link
+              to="/hello"
+              className="px-6 py-3 bg-pink-600 text-white rounded-lg font-semibold hover:bg-pink-700 transition-colors"
+            >
+              👋 HelloWorld
+            </Link>
             <button
               onClick={handleNavigateToProfile}
               className="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"
