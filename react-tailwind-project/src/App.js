@@ -10,6 +10,7 @@ import FormPage from './pages/FormPage';
 import CounterPage from './pages/CounterPage';
 import HelloWorldPage from './pages/HelloWorldPage';
 import ReduxPage from './pages/ReduxPage';
+import TestingPage from './pages/TestingPage';
 
 // Loading component
 const LoadingSpinner = () => (
@@ -89,8 +90,9 @@ function App() {
           <Route path="/form" element={<FormPage />} />
           <Route path="/counter" element={<CounterPage />} />
           <Route path="/hello" element={<HelloWorldPage />} />
-          <Route path="/redux" element={<ReduxPage />} />
-          <Route path="*" element={<NotFound />} />
+            <Route path="/redux" element={<ReduxPage />} />
+            <Route path="/testing" element={<TestingPage />} />
+            <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </div>

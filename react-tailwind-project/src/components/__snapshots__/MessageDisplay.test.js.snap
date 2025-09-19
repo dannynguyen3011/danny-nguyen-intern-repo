@@ -1,0 +1,261 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageDisplay Component snapshots matches snapshot with custom props 1`] = `
+<div
+  class="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-lg"
+>
+  <div
+    class="text-center mb-6"
+  >
+    <h2
+      class="text-2xl font-bold text-gray-800 mb-2"
+    >
+      📝 Message Display Component
+    </h2>
+    <p
+      class="text-gray-600"
+    >
+      Interactive component for testing user interactions
+    </p>
+  </div>
+  <div
+    class="mb-6"
+  >
+    <div
+      aria-live="polite"
+      class="p-4 rounded-lg text-center font-medium transition-all duration-300 bg-gray-100 text-gray-800 border border-gray-200"
+      data-testid="message-display"
+      role="alert"
+    >
+      Custom snapshot message
+    </div>
+  </div>
+  <div
+    class="space-y-4"
+  >
+    <div
+      class="grid grid-cols-2 md:grid-cols-3 gap-2"
+    >
+      <button
+        class="px-3 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors text-sm"
+        data-testid="welcome-button"
+      >
+        Welcome
+      </button>
+      <button
+        class="px-3 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors text-sm"
+        data-testid="success-button"
+      >
+        Success
+      </button>
+      <button
+        class="px-3 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors text-sm"
+        data-testid="warning-button"
+      >
+        Warning
+      </button>
+      <button
+        class="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm"
+        data-testid="info-button"
+      >
+        Info
+      </button>
+      <button
+        class="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-sm"
+        data-testid="error-button"
+      >
+        Error
+      </button>
+      <button
+        class="px-3 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition-colors text-sm"
+        data-testid="custom-button"
+      >
+        Custom
+      </button>
+    </div>
+    <div
+      class="flex flex-wrap gap-2 justify-center"
+    >
+      <button
+        class="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors font-medium"
+        data-testid="toggle-visibility-button"
+      >
+        Hide Message
+      </button>
+      <button
+        class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors font-medium"
+        data-testid="reset-button"
+      >
+        Reset All
+      </button>
+    </div>
+  </div>
+  <div
+    class="mt-4 text-center"
+  >
+    <p
+      class="text-xs text-gray-400"
+    >
+      Component includes ARIA labels and semantic HTML for accessibility
+    </p>
+  </div>
+</div>
+`;
+
+exports[`MessageDisplay Component snapshots matches snapshot with default props 1`] = `
+<div
+  class="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-lg"
+>
+  <div
+    class="text-center mb-6"
+  >
+    <h2
+      class="text-2xl font-bold text-gray-800 mb-2"
+    >
+      📝 Message Display Component
+    </h2>
+    <p
+      class="text-gray-600"
+    >
+      Interactive component for testing user interactions
+    </p>
+  </div>
+  <div
+    class="mb-6"
+  >
+    <div
+      aria-live="polite"
+      class="p-4 rounded-lg text-center font-medium transition-all duration-300 bg-gray-100 text-gray-800 border border-gray-200"
+      data-testid="message-display"
+      role="alert"
+    >
+      Welcome to our React Testing Demo!
+    </div>
+  </div>
+  <div
+    class="space-y-4"
+  >
+    <div
+      class="grid grid-cols-2 md:grid-cols-3 gap-2"
+    >
+      <button
+        class="px-3 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors text-sm"
+        data-testid="welcome-button"
+      >
+        Welcome
+      </button>
+      <button
+        class="px-3 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors text-sm"
+        data-testid="success-button"
+      >
+        Success
+      </button>
+      <button
+        class="px-3 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors text-sm"
+        data-testid="warning-button"
+      >
+        Warning
+      </button>
+      <button
+        class="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors text-sm"
+        data-testid="info-button"
+      >
+        Info
+      </button>
+      <button
+        class="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors text-sm"
+        data-testid="error-button"
+      >
+        Error
+      </button>
+      <button
+        class="px-3 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition-colors text-sm"
+        data-testid="custom-button"
+      >
+        Custom
+      </button>
+    </div>
+    <div
+      class="flex flex-wrap gap-2 justify-center"
+    >
+      <button
+        class="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors font-medium"
+        data-testid="toggle-visibility-button"
+      >
+        Hide Message
+      </button>
+      <button
+        class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors font-medium"
+        data-testid="reset-button"
+      >
+        Reset All
+      </button>
+    </div>
+  </div>
+  <div
+    class="mt-6 p-4 bg-gray-50 rounded-lg"
+  >
+    <div
+      class="text-center"
+    >
+      <p
+        class="text-sm text-gray-600 mb-2"
+      >
+        Interaction Statistics
+      </p>
+      <div
+        class="grid grid-cols-3 gap-4 text-center"
+      >
+        <div>
+          <p
+            class="text-lg font-bold text-blue-600"
+            data-testid="click-count"
+          >
+            0
+          </p>
+          <p
+            class="text-xs text-gray-500"
+          >
+            Total Clicks
+          </p>
+        </div>
+        <div>
+          <p
+            class="text-lg font-bold text-green-600"
+            data-testid="message-type"
+          >
+            welcome
+          </p>
+          <p
+            class="text-xs text-gray-500"
+          >
+            Message Type
+          </p>
+        </div>
+        <div>
+          <p
+            class="text-lg font-bold text-purple-600"
+            data-testid="visibility-status"
+          >
+            Visible
+          </p>
+          <p
+            class="text-xs text-gray-500"
+          >
+            Visibility
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="mt-4 text-center"
+  >
+    <p
+      class="text-xs text-gray-400"
+    >
+      Component includes ARIA labels and semantic HTML for accessibility
+    </p>
+  </div>
+</div>
+`;

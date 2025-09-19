@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HelloWorld Component snapshots matches snapshot with custom name 1`] = `
+<div
+  class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded-lg shadow-lg p-6 text-center"
+>
+  <div
+    class="mb-4"
+  >
+    <h1
+      class="text-3xl font-bold text-white mb-2"
+    >
+      Hello, 
+      Snapshot Test
+      ! 👋
+    </h1>
+    <p
+      class="text-white/90 text-lg"
+    >
+      Welcome to our React application!
+    </p>
+  </div>
+  <div
+    class="bg-white/20 backdrop-blur-sm rounded-lg p-4 mb-4"
+  >
+    <h2
+      class="text-xl font-semibold text-white mb-2"
+    >
+      🎯 Component Details
+    </h2>
+    <div
+      class="text-white/90 text-sm space-y-1"
+    >
+      <p>
+        <strong>
+          Component Type:
+        </strong>
+         Functional Component
+      </p>
+      <p>
+        <strong>
+          Props Received:
+        </strong>
+         name = "
+        Snapshot Test
+        "
+      </p>
+      <p>
+        <strong>
+          Default Value:
+        </strong>
+         "Focus Bear"
+      </p>
+    </div>
+  </div>
+  <div
+    class="bg-white/10 rounded-lg p-3"
+  >
+    <p
+      class="text-white/80 text-sm"
+    >
+      💡 This component demonstrates how props make components reusable and dynamic!
+    </p>
+  </div>
+</div>
+`;
+
+exports[`HelloWorld Component snapshots matches snapshot with default props 1`] = `
+<div
+  class="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded-lg shadow-lg p-6 text-center"
+>
+  <div
+    class="mb-4"
+  >
+    <h1
+      class="text-3xl font-bold text-white mb-2"
+    >
+      Hello, 
+      Focus Bear
+      ! 👋
+    </h1>
+    <p
+      class="text-white/90 text-lg"
+    >
+      Welcome to our React application!
+    </p>
+  </div>
+  <div
+    class="bg-white/20 backdrop-blur-sm rounded-lg p-4 mb-4"
+  >
+    <h2
+      class="text-xl font-semibold text-white mb-2"
+    >
+      🎯 Component Details
+    </h2>
+    <div
+      class="text-white/90 text-sm space-y-1"
+    >
+      <p>
+        <strong>
+          Component Type:
+        </strong>
+         Functional Component
+      </p>
+      <p>
+        <strong>
+          Props Received:
+        </strong>
+         name = "
+        Focus Bear
+        "
+      </p>
+      <p>
+        <strong>
+          Default Value:
+        </strong>
+         "Focus Bear"
+      </p>
+    </div>
+  </div>
+  <div
+    class="bg-white/10 rounded-lg p-3"
+  >
+    <p
+      class="text-white/80 text-sm"
+    >
+      💡 This component demonstrates how props make components reusable and dynamic!
+    </p>
+  </div>
+</div>
+`;
