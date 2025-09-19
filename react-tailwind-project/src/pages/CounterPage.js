@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Counter from '../components/Counter';
+import SimpleCounter from '../components/SimpleCounter';
 import Button from '../components/Button';
 
 /**
@@ -60,9 +61,20 @@ const CounterPage = () => {
           </div>
         </div>
 
-        {/* Main Counter Component */}
-        <div className="mb-12">
-          <Counter />
+        {/* Counter Components */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          <div>
+            <h2 className="text-2xl font-bold text-white text-center mb-4">
+              Simple Counter (Basic useState)
+            </h2>
+            <SimpleCounter />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-white text-center mb-4">
+              Advanced Counter (Full Featured)
+            </h2>
+            <Counter />
+          </div>
         </div>
 
         {/* Button Showcase Section */}
