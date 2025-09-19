@@ -62,6 +62,12 @@ const Home = () => {
             >
               👋 HelloWorld
             </Link>
+            <Link
+              to="/redux"
+              className="px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors"
+            >
+              🔄 Redux
+            </Link>
             <button
               onClick={handleNavigateToProfile}
               className="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"

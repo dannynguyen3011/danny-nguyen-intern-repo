@@ -9,6 +9,7 @@ import Profile from './pages/Profile';
 import FormPage from './pages/FormPage';
 import CounterPage from './pages/CounterPage';
 import HelloWorldPage from './pages/HelloWorldPage';
+import ReduxPage from './pages/ReduxPage';
 
 // Loading component
 const LoadingSpinner = () => (
@@ -66,6 +67,12 @@ const NotFound = () => {
           >
             👋 HelloWorld Component
           </a>
+          <a
+            href="/redux"
+            className="block w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200"
+          >
+            🔄 Redux State Management
+          </a>
         </div>
       </div>
     </div>
@@ -82,6 +89,7 @@ function App() {
           <Route path="/form" element={<FormPage />} />
           <Route path="/counter" element={<CounterPage />} />
           <Route path="/hello" element={<HelloWorldPage />} />
+          <Route path="/redux" element={<ReduxPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
