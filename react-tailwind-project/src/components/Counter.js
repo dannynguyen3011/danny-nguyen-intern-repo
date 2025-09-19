@@ -1,49 +1,98 @@
 import React, { useState, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Button from './Button';
+import {
+  increment as reduxIncrement,
+  decrement as reduxDecrement,
+  setStep as reduxSetStep,
+  reset as reduxReset,
+  undo as reduxUndo
+} from '../store/counterSlice';
+import {
+  selectCounterValue,
+  selectCounterStep,
+  selectCounterHistory,
+  selectCanUndo
+} from '../store/selectors';
 
 /**
  * Counter component with Tailwind CSS styling
  * Demonstrates various button states and interactions
+ * Supports both useState and Redux modes for comparison
  */
-const Counter = () => {
+const Counter = ({ useRedux = false }) => {
   const { t } = useTranslation();
-  const [count, setCount] = useState(0);
-  const [step, setStep] = useState(1);
-  const [history, setHistory] = useState([0]);
+  const dispatch = useDispatch();
+  
+  // useState state (used when useRedux is false)
+  const [localCount, setLocalCount] = useState(0);
+  const [localStep, setLocalStep] = useState(1);
+  const [localHistory, setLocalHistory] = useState([0]);
+  
+  // Redux state (used when useRedux is true)
+  const reduxCount = useSelector(selectCounterValue);
+  const reduxStep = useSelector(selectCounterStep);
+  const reduxHistory = useSelector(selectCounterHistory);
+  const reduxCanUndo = useSelector(selectCanUndo);
+  
+  // Choose state source based on useRedux prop
+  const count = useRedux ? reduxCount : localCount;
+  const step = useRedux ? reduxStep : localStep;
+  const history = useRedux ? reduxHistory : localHistory;
 
   // Memoized handlers using useCallback
   const increment = useCallback(() => {
-    const newCount = count + step;
-    setCount(newCount);
-    setHistory(prev => [...prev, newCount]);
-  }, [count, step]);
+    if (useRedux) {
+      dispatch(reduxIncrement());
+    } else {
+      const newCount = localCount + localStep;
+      setLocalCount(newCount);
+      setLocalHistory(prev => [...prev, newCount]);
+    }
+  }, [useRedux, dispatch, localCount, localStep]);
 
   const decrement = useCallback(() => {
-    const newCount = count - step;
-    setCount(newCount);
-    setHistory(prev => [...prev, newCount]);
-  }, [count, step]);
+    if (useRedux) {
+      dispatch(reduxDecrement());
+    } else {
+      const newCount = localCount - localStep;
+      setLocalCount(newCount);
+      setLocalHistory(prev => [...prev, newCount]);
+    }
+  }, [useRedux, dispatch, localCount, localStep]);
 
   const reset = useCallback(() => {
-    setCount(0);
-    setHistory([0]);
-  }, []);
+    if (useRedux) {
+      dispatch(reduxReset());
+    } else {
+      setLocalCount(0);
+      setLocalHistory([0]);
+    }
+  }, [useRedux, dispatch]);
 
   const handleStepChange = useCallback((newStep) => {
-    setStep(newStep);
-  }, []);
+    if (useRedux) {
+      dispatch(reduxSetStep(newStep));
+    } else {
+      setLocalStep(newStep);
+    }
+  }, [useRedux, dispatch]);
 
   const undo = useCallback(() => {
-    if (history.length > 1) {
-      const newHistory = history.slice(0, -1);
-      const previousCount = newHistory[newHistory.length - 1];
-      setCount(previousCount);
-      setHistory(newHistory);
+    if (useRedux) {
+      dispatch(reduxUndo());
+    } else {
+      if (localHistory.length > 1) {
+        const newHistory = localHistory.slice(0, -1);
+        const previousCount = newHistory[newHistory.length - 1];
+        setLocalCount(previousCount);
+        setLocalHistory(newHistory);
+      }
     }
-  }, [history]);
+  }, [useRedux, dispatch, localHistory]);
 
-  const canUndo = history.length > 1;
+  const canUndo = useRedux ? reduxCanUndo : localHistory.length > 1;
   const isAtZero = count === 0;
 
   return (
@@ -56,6 +105,13 @@ const Counter = () => {
         <p className="text-gray-600">
           Styled with Tailwind CSS & custom Button component
         </p>
+        <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium mt-2 ${
+          useRedux 
+            ? 'bg-red-100 text-red-800' 
+            : 'bg-blue-100 text-blue-800'
+        }`}>
+          {useRedux ? '🔄 Redux Mode' : '⚡ useState Mode'}
+        </div>
       </div>
 
       {/* Counter Display */}

@@ -71,9 +71,35 @@ const CounterPage = () => {
           </div>
           <div>
             <h2 className="text-2xl font-bold text-white text-center mb-4">
-              Advanced Counter (Full Featured)
+              Advanced Counter (useState Mode)
             </h2>
-            <Counter />
+            <Counter useRedux={false} />
+          </div>
+        </div>
+
+        {/* Redux vs useState Comparison */}
+        <div className="mb-12">
+          <div className="text-center mb-6">
+            <h2 className="text-3xl font-bold text-white mb-2">
+              Redux vs useState Comparison
+            </h2>
+            <p className="text-white/80">
+              Same component, different state management approaches
+            </p>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-xl font-bold text-white text-center mb-4">
+                useState Approach
+              </h3>
+              <Counter useRedux={false} />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-white text-center mb-4">
+                Redux Approach
+              </h3>
+              <Counter useRedux={true} />
+            </div>
           </div>
         </div>
 

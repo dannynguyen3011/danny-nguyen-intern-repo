@@ -597,3 +597,616 @@ test('composed selectors work correctly', () => {
 **Selectors** create a clean abstraction layer that improves performance, maintainability, and developer experience while enabling advanced patterns like composition and parameterization.
 
 Selectors are not just a convenience feature—they're an essential architectural pattern that enables building scalable, performant Redux applications. They represent the difference between a fragile, hard-to-maintain codebase and a robust, scalable state management architecture.
+
+---
+
+## When Should You Use Redux Instead of useState?
+
+The decision between Redux and `useState` is one of the most important architectural choices in React applications. Understanding when to use each approach can significantly impact your application's maintainability, performance, and developer experience.
+
+### **The useState Approach**
+
+React's built-in `useState` hook is perfect for component-local state management:
+
+```jsx
+// Simple local state with useState
+const SimpleCounter = () => {
+  const [count, setCount] = useState(0);
+  const [step, setStep] = useState(1);
+
+  const increment = () => setCount(prev => prev + step);
+  const decrement = () => setCount(prev => prev - step);
+  const reset = () => setCount(0);
+
+  return (
+    <div>
+      <h2>Count: {count}</h2>
+      <button onClick={increment}>+{step}</button>
+      <button onClick={decrement}>-{step}</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
+};
+```
+
+### **The Redux Approach**
+
+Redux provides centralized state management with predictable state updates:
+
+```jsx
+// Redux-powered counter
+const ReduxCounter = () => {
+  const count = useSelector(selectCounterValue);
+  const step = useSelector(selectCounterStep);
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      <h2>Count: {count}</h2>
+      <button onClick={() => dispatch(increment())}>+{step}</button>
+      <button onClick={() => dispatch(decrement())}>-{step}</button>
+      <button onClick={() => dispatch(reset())}>Reset</button>
+    </div>
+  );
+};
+```
+
+### **Decision Framework: When to Use Redux**
+
+#### **✅ Use Redux When:**
+
+##### **1. State Needs to Be Shared Across Multiple Components**
+
+**Problem with useState:**
+```jsx
+// Prop drilling nightmare
+const App = () => {
+  const [user, setUser] = useState(null);
+  const [theme, setTheme] = useState('light');
+  const [notifications, setNotifications] = useState([]);
+
+  return (
+    <div>
+      <Header user={user} theme={theme} setTheme={setTheme} />
+      <Sidebar 
+        user={user} 
+        notifications={notifications}
+        setNotifications={setNotifications} 
+      />
+      <MainContent 
+        user={user} 
+        setUser={setUser}
+        theme={theme}
+        notifications={notifications}
+        setNotifications={setNotifications}
+      />
+    </div>
+  );
+};
+
+// Every component needs props passed down
+const Header = ({ user, theme, setTheme }) => {
+  return (
+    <header>
+      <UserProfile user={user} />
+      <ThemeToggle theme={theme} setTheme={setTheme} />
+    </header>
+  );
+};
+```
+
+**Solution with Redux:**
+```jsx
+// Clean component hierarchy
+const App = () => (
+  <div>
+    <Header />
+    <Sidebar />
+    <MainContent />
+  </div>
+);
+
+// Components access state directly
+const Header = () => {
+  const user = useSelector(selectUser);
+  const theme = useSelector(selectTheme);
+  
+  return (
+    <header>
+      <UserProfile user={user} />
+      <ThemeToggle theme={theme} />
+    </header>
+  );
+};
+
+const UserProfile = ({ user }) => {
+  const dispatch = useDispatch();
+  
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
+  
+  return user ? (
+    <div>
+      <span>{user.name}</span>
+      <button onClick={handleLogout}>Logout</button>
+    </div>
+  ) : null;
+};
+```
+
+##### **2. Complex State Logic and Updates**
+
+**useState becomes unwieldy:**
+```jsx
+// Complex state management with useState
+const ShoppingCart = () => {
+  const [items, setItems] = useState([]);
+  const [discounts, setDiscounts] = useState([]);
+  const [shippingInfo, setShippingInfo] = useState(null);
+  const [paymentInfo, setPaymentInfo] = useState(null);
+  const [orderStatus, setOrderStatus] = useState('idle');
+
+  const addItem = (product) => {
+    setItems(prev => {
+      const existing = prev.find(item => item.id === product.id);
+      if (existing) {
+        return prev.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prev, { ...product, quantity: 1 }];
+    });
+  };
+
+  const removeItem = (productId) => {
+    setItems(prev => prev.filter(item => item.id !== productId));
+  };
+
+  const applyDiscount = (discountCode) => {
+    // Complex discount logic
+    setDiscounts(prev => {
+      // Validate discount, calculate savings, update totals
+      // This gets very complex very quickly
+    });
+  };
+
+  const calculateTotal = () => {
+    // Complex calculation involving items, discounts, shipping, tax
+    // This logic is scattered and hard to test
+  };
+
+  // Component becomes massive and hard to manage
+};
+```
+
+**Redux handles complexity elegantly:**
+```jsx
+// Clean Redux slice
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState: {
+    items: [],
+    discounts: [],
+    shippingInfo: null,
+    paymentInfo: null,
+    status: 'idle'
+  },
+  reducers: {
+    addItem: (state, action) => {
+      const existing = state.items.find(item => item.id === action.payload.id);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        state.items.push({ ...action.payload, quantity: 1 });
+      }
+    },
+    removeItem: (state, action) => {
+      state.items = state.items.filter(item => item.id !== action.payload);
+    },
+    applyDiscount: (state, action) => {
+      // Centralized discount logic
+      const discount = calculateDiscount(action.payload, state);
+      if (discount.isValid) {
+        state.discounts.push(discount);
+      }
+    }
+  }
+});
+
+// Clean component
+const ShoppingCart = () => {
+  const items = useSelector(selectCartItems);
+  const total = useSelector(selectCartTotal);
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      {items.map(item => (
+        <CartItem 
+          key={item.id} 
+          item={item}
+          onRemove={() => dispatch(removeItem(item.id))}
+        />
+      ))}
+      <div>Total: ${total}</div>
+    </div>
+  );
+};
+```
+
+##### **3. Need for Time Travel Debugging and State Inspection**
+
+**Redux DevTools provide powerful debugging:**
+```jsx
+// With Redux, you can:
+// - See every action that was dispatched
+// - Time travel through state changes
+// - Inspect state at any point in time
+// - Replay actions to reproduce bugs
+// - Export/import state for testing
+
+// Example debugging workflow:
+// 1. User reports bug: "Cart total is wrong after applying discount"
+// 2. Open Redux DevTools
+// 3. See exact sequence: ADD_ITEM → APPLY_DISCOUNT → UPDATE_SHIPPING
+// 4. Time travel to before APPLY_DISCOUNT
+// 5. Step through action by action to find the issue
+// 6. Export state to create test case
+```
+
+##### **4. Predictable State Updates Across Async Operations**
+
+**Complex async flows:**
+```jsx
+// Redux handles complex async flows elegantly
+const userSlice = createSlice({
+  name: 'user',
+  initialState: {
+    profile: null,
+    preferences: null,
+    loading: false,
+    error: null
+  },
+  reducers: {
+    fetchUserStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    fetchUserSuccess: (state, action) => {
+      state.profile = action.payload.profile;
+      state.preferences = action.payload.preferences;
+      state.loading = false;
+    },
+    fetchUserFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    }
+  }
+});
+
+// Async thunk
+export const fetchUser = createAsyncThunk(
+  'user/fetchUser',
+  async (userId, { rejectWithValue }) => {
+    try {
+      const [profile, preferences] = await Promise.all([
+        api.getUserProfile(userId),
+        api.getUserPreferences(userId)
+      ]);
+      return { profile, preferences };
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+```
+
+##### **5. State Persistence and Hydration**
+
+**Redux integrates well with persistence:**
+```jsx
+// Redux with persistence
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['user', 'cart', 'preferences'] // Only persist specific slices
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+const store = configureStore({
+  reducer: persistedReducer
+});
+
+// State automatically persists and rehydrates
+```
+
+#### **❌ Don't Use Redux When:**
+
+##### **1. Simple, Component-Local State**
+
+```jsx
+// Perfect for useState - no Redux needed
+const Modal = ({ isOpen, onClose }) => {
+  const [activeTab, setActiveTab] = useState('general');
+  const [formData, setFormData] = useState({});
+  
+  // This state is only used within this component
+  // No need for Redux complexity
+  
+  return isOpen ? (
+    <div className="modal">
+      <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+      <TabContent tab={activeTab} data={formData} onChange={setFormData} />
+    </div>
+  ) : null;
+};
+```
+
+##### **2. Temporary UI State**
+
+```jsx
+// useState is perfect for temporary UI state
+const SearchInput = () => {
+  const [query, setQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+  
+  // This state is ephemeral and component-specific
+  // Redux would be overkill
+  
+  const handleSearch = async (searchQuery) => {
+    setIsLoading(true);
+    const results = await api.search(searchQuery);
+    setSuggestions(results);
+    setIsLoading(false);
+  };
+  
+  return (
+    <div>
+      <input 
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onKeyPress={(e) => e.key === 'Enter' && handleSearch(query)}
+      />
+      {isLoading && <LoadingSpinner />}
+      {suggestions.map(item => <SuggestionItem key={item.id} item={item} />)}
+    </div>
+  );
+};
+```
+
+##### **3. Small Applications**
+
+```jsx
+// Small app - useState is sufficient
+const TodoApp = () => {
+  const [todos, setTodos] = useState([]);
+  const [filter, setFilter] = useState('all');
+  
+  const addTodo = (text) => {
+    setTodos(prev => [...prev, { id: Date.now(), text, completed: false }]);
+  };
+  
+  const toggleTodo = (id) => {
+    setTodos(prev => prev.map(todo =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    ));
+  };
+  
+  // For a simple todo app, this is perfectly fine
+  // Redux would add unnecessary complexity
+  
+  return (
+    <div>
+      <TodoInput onAdd={addTodo} />
+      <TodoFilter filter={filter} onChange={setFilter} />
+      <TodoList todos={todos} onToggle={toggleTodo} />
+    </div>
+  );
+};
+```
+
+### **Hybrid Approach: Redux + useState**
+
+Often, the best approach is using both:
+
+```jsx
+// Global state in Redux, local state in useState
+const UserProfile = () => {
+  // Global user data from Redux
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+  
+  // Local form state with useState
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({});
+  const [validationErrors, setValidationErrors] = useState({});
+  
+  const handleSave = async () => {
+    try {
+      await dispatch(updateUserProfile(formData));
+      setIsEditing(false);
+      setFormData({});
+    } catch (error) {
+      setValidationErrors(error.validationErrors);
+    }
+  };
+  
+  return (
+    <div>
+      {isEditing ? (
+        <EditForm 
+          data={formData}
+          errors={validationErrors}
+          onChange={setFormData}
+          onSave={handleSave}
+          onCancel={() => setIsEditing(false)}
+        />
+      ) : (
+        <DisplayProfile 
+          user={user}
+          onEdit={() => setIsEditing(true)}
+        />
+      )}
+    </div>
+  );
+};
+```
+
+### **Migration Strategy: useState → Redux**
+
+When your component state grows complex, here's how to migrate:
+
+#### **Phase 1: Identify State That Should Be Global**
+```jsx
+// Before: All state in component
+const Dashboard = () => {
+  const [user, setUser] = useState(null);           // → Move to Redux
+  const [notifications, setNotifications] = useState([]); // → Move to Redux
+  const [sidebarOpen, setSidebarOpen] = useState(false);  // → Keep local
+  const [activePanel, setActivePanel] = useState('home'); // → Keep local
+};
+```
+
+#### **Phase 2: Create Redux Slice**
+```jsx
+// Create slice for global state
+const appSlice = createSlice({
+  name: 'app',
+  initialState: {
+    user: null,
+    notifications: []
+  },
+  reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
+    addNotification: (state, action) => {
+      state.notifications.push(action.payload);
+    }
+  }
+});
+```
+
+#### **Phase 3: Gradual Migration**
+```jsx
+// Migrate gradually
+const Dashboard = () => {
+  // Global state from Redux
+  const user = useSelector(selectUser);
+  const notifications = useSelector(selectNotifications);
+  const dispatch = useDispatch();
+  
+  // Keep local UI state
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activePanel, setActivePanel] = useState('home');
+  
+  // Update handlers to use Redux
+  const handleLogin = (userData) => {
+    dispatch(setUser(userData));
+  };
+};
+```
+
+### **Performance Considerations**
+
+#### **useState Performance Characteristics:**
+- ✅ Minimal overhead for simple state
+- ✅ No external dependencies
+- ✅ Automatic garbage collection when component unmounts
+- ❌ Can cause prop drilling performance issues
+- ❌ Multiple state updates can cause multiple re-renders
+
+#### **Redux Performance Characteristics:**
+- ✅ Efficient updates through selectors
+- ✅ Prevents unnecessary re-renders with proper selectors
+- ✅ Centralized state reduces prop drilling
+- ❌ Initial setup overhead
+- ❌ Bundle size increase
+- ❌ Learning curve for team members
+
+### **Decision Matrix**
+
+| Criteria | useState | Redux | Notes |
+|----------|----------|-------|-------|
+| **State Scope** | Component-local | Cross-component | Redux wins for shared state |
+| **Complexity** | Simple updates | Complex logic | Redux better for complex state |
+| **Team Size** | Any | Medium to Large | Redux provides structure for teams |
+| **App Size** | Small to Medium | Medium to Large | Redux overhead justified in larger apps |
+| **Debugging Needs** | Basic | Advanced | Redux DevTools are powerful |
+| **Performance** | Good for simple | Good with selectors | Both can be optimized |
+| **Learning Curve** | Minimal | Moderate | useState is easier to learn |
+| **Testability** | Component tests | Isolated logic tests | Redux enables better separation |
+
+### **Real-World Examples**
+
+#### **useState is Perfect For:**
+```jsx
+// Form validation state
+const ContactForm = () => {
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+};
+
+// Modal visibility
+const ProductCard = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(0);
+};
+
+// Animation state
+const Accordion = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [height, setHeight] = useState(0);
+};
+```
+
+#### **Redux is Essential For:**
+```jsx
+// Authentication state used across app
+const authSlice = createSlice({
+  name: 'auth',
+  initialState: { user: null, token: null, permissions: [] }
+});
+
+// Shopping cart shared across pages
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState: { items: [], total: 0, discounts: [] }
+});
+
+// Application settings
+const settingsSlice = createSlice({
+  name: 'settings',
+  initialState: { theme: 'light', language: 'en', notifications: true }
+});
+```
+
+### **Summary: Making the Right Choice**
+
+**Use useState when:**
+- State is component-local and won't be shared
+- Logic is simple and straightforward
+- You're building a small application
+- State is temporary or UI-related
+- You want minimal setup overhead
+
+**Use Redux when:**
+- State needs to be shared across multiple components
+- You have complex state logic and updates
+- You need predictable state management
+- You want powerful debugging capabilities
+- You're building a large application
+- Multiple developers are working on the codebase
+- You need state persistence or time travel debugging
+
+**The key insight:** Start with `useState` for local state and migrate to Redux when you encounter the limitations of local state management. Don't prematurely optimize with Redux, but don't hesitate to adopt it when your application's complexity justifies the additional structure and tooling.
+
+**Remember:** The best applications often use both `useState` and Redux together, leveraging each tool for its strengths—`useState` for local component state and Redux for global application state.
